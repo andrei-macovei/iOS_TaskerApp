@@ -2,18 +2,139 @@
 //  ViewController.swift
 //  TaskList
 //
-//  Created by user215932 on 4/26/22.
+//  Created by user215932 on 4/28/22.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    // Database context
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    let tableView: UITableView = {
+        let table = UITableView()
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        return table
+    }()
+    
+    private var toDoItems = [ToDoListItem]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        title = "TaskList"
+        view.addSubview(tableView)
+        getAllItems()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.frame = view.bounds
+        
+        // Add + button
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapPlus))
+    }
+    
+    @objc private func didTapPlus(){
+        let alert = UIAlertController(title: "Add Item", message: "Add a new to-do item", preferredStyle: .alert)
+        
+        alert.addTextField(configurationHandler: nil)
+        alert.addAction(UIAlertAction(title: "Submit", style: .cancel, handler: { [weak self] _ in
+            guard let field = alert.textFields?.first, let text = field.text, !text.isEmpty else{
+                return
+            }
+            
+            self?.createItem(name: text)
+        }))
+        present(alert, animated: true)
     }
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return toDoItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let item = toDoItems[indexPath.row]
+        cell.textLabel?.text = item.name
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let item = toDoItems[indexPath.row]
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        sheet.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
+            
+            let alert = UIAlertController(title: "Edit Item", message: "Edit to-do item", preferredStyle: .alert)
+            
+            alert.addTextField(configurationHandler: nil)
+            alert.textFields?.first?.text = item.name
+            alert.addAction(UIAlertAction(title: "Save changes", style: .cancel, handler: { [weak self] _ in
+                guard let field = alert.textFields?.first, let newName = field.text, !newName.isEmpty else{
+                    return
+                }
+                
+                self?.updateItem(item: item, newName: newName)
+            }))
+            self.present(alert, animated: true)
+        }))
+        sheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            self?.deleteItem(item: item)
+        }))
+        
+        present(sheet, animated: true)
+    }
+    
+    // CoreData Operations
+    func getAllItems(){
+        do{
+            toDoItems = try context.fetch(ToDoListItem.fetchRequest())
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        catch{
+            print(error)
+        }
+    }
 
+    func createItem(name: String){
+        let newItem = ToDoListItem(context: context)
+        newItem.name = name
+        newItem.createdAt = Date()
+        do{
+            try context.save()
+            getAllItems()
+        }
+        catch{
+            print(error)
+        }
+    }
+    
+    func deleteItem(item: ToDoListItem){
+        context.delete(item)
+        do{
+            try context.save()
+            getAllItems()
+        }
+        catch{
+            print(error)
+        }
+    }
+    
+    func updateItem(item: ToDoListItem, newName: String){
+        item.name = newName
+        do{
+            try context.save()
+            getAllItems()
+        }
+        catch{
+            print(error)
+        }
+    }
 }
 
