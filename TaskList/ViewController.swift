@@ -118,7 +118,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Notification content
         let content = UNMutableNotificationContent()
         content.title = "Like TaskList?"
-        content.body = "Don't forget to rate the App on the App Store"
+        content.body = "Don't forget to rate the App!"
         
         // Notification trigger
         let date = Date().addingTimeInterval(10)

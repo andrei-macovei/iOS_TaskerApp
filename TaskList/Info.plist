@@ -21,5 +21,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>TaskList needs your permission to acces Media Library.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>TaskList needs you permission to save to Gallery.</string>
 </dict>
 </plist>

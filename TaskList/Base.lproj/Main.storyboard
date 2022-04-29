@@ -33,13 +33,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTN-CI-XET">
-                                <rect key="frame" x="40" y="64" width="50" height="25.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <rect key="frame" x="20" y="64" width="52" height="26.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" systemColor="systemBlueColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfV-WG-mUx">
-                                <rect key="frame" x="40" y="109.5" width="100" height="50"/>
+                                <rect key="frame" x="20" y="110.5" width="100" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="1Fr-eI-uep"/>
                                     <constraint firstAttribute="height" constant="50" id="xyp-XO-nD5"/>
@@ -48,18 +48,64 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button verifyAmbiguity="off" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zTR-T6-kd0">
+                                <rect key="frame" x="20" y="806.5" width="177" height="35.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zTR-T6-kd0" secondAttribute="height" multiplier="5:1" id="BcM-fO-YTD"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Add media" cornerStyle="medium">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="didTapAddMedia" destination="pVq-E0-IFV" eventType="touchUpInside" id="guY-ON-vQC"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tbf-N8-3ci">
+                                <rect key="frame" x="20" y="180.5" width="374" height="606"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1B-56-m9n">
+                                <rect key="frame" x="217" y="806.5" width="177" height="35.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="A1B-56-m9n" secondAttribute="height" multiplier="5:1" id="ihB-ib-Oz8"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Share">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="didTapShare" destination="pVq-E0-IFV" eventType="touchUpInside" id="vI7-jG-4gj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eF7-LT-XZi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="vTN-CI-XET" firstAttribute="top" secondItem="eF7-LT-XZi" secondAttribute="top" constant="20" id="7Sc-QJ-c9z"/>
-                            <constraint firstItem="nfV-WG-mUx" firstAttribute="leading" secondItem="eF7-LT-XZi" secondAttribute="leading" constant="40" id="GIm-Tl-UJh"/>
+                            <constraint firstItem="tbf-N8-3ci" firstAttribute="top" secondItem="nfV-WG-mUx" secondAttribute="bottom" constant="20" id="9K0-jj-xnr"/>
+                            <constraint firstItem="A1B-56-m9n" firstAttribute="leading" secondItem="zTR-T6-kd0" secondAttribute="trailing" constant="20" id="DwJ-TK-WEE"/>
+                            <constraint firstItem="nfV-WG-mUx" firstAttribute="leading" secondItem="eF7-LT-XZi" secondAttribute="leading" constant="20" id="GIm-Tl-UJh"/>
+                            <constraint firstItem="A1B-56-m9n" firstAttribute="top" secondItem="tbf-N8-3ci" secondAttribute="bottom" constant="20" id="VdM-W4-E1X"/>
+                            <constraint firstItem="eF7-LT-XZi" firstAttribute="trailing" secondItem="tbf-N8-3ci" secondAttribute="trailing" constant="20" id="WDL-wh-JFB"/>
+                            <constraint firstItem="eF7-LT-XZi" firstAttribute="bottom" secondItem="zTR-T6-kd0" secondAttribute="bottom" constant="20" id="aOh-pR-LHP"/>
+                            <constraint firstItem="zTR-T6-kd0" firstAttribute="top" secondItem="tbf-N8-3ci" secondAttribute="bottom" constant="20" id="eR8-3A-Ch3"/>
+                            <constraint firstItem="eF7-LT-XZi" firstAttribute="trailing" secondItem="A1B-56-m9n" secondAttribute="trailing" constant="20" id="jcN-ND-Kgv"/>
                             <constraint firstItem="nfV-WG-mUx" firstAttribute="top" secondItem="vTN-CI-XET" secondAttribute="bottom" constant="20" id="lzo-fh-rlr"/>
-                            <constraint firstItem="vTN-CI-XET" firstAttribute="leading" secondItem="eF7-LT-XZi" secondAttribute="leading" constant="40" id="u3d-vt-8Zh"/>
+                            <constraint firstItem="zTR-T6-kd0" firstAttribute="leading" secondItem="eF7-LT-XZi" secondAttribute="leading" constant="20" id="ple-M6-bPs"/>
+                            <constraint firstItem="vTN-CI-XET" firstAttribute="leading" secondItem="eF7-LT-XZi" secondAttribute="leading" constant="20" id="u3d-vt-8Zh"/>
+                            <constraint firstItem="tbf-N8-3ci" firstAttribute="leading" secondItem="eF7-LT-XZi" secondAttribute="leading" constant="20" id="vNB-kd-cMX"/>
+                            <constraint firstItem="eF7-LT-XZi" firstAttribute="bottom" secondItem="A1B-56-m9n" secondAttribute="bottom" constant="20" id="vx8-0P-xX1"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="nfV-WG-mUx" id="CvY-OH-BEz"/>
+                        <outlet property="imageView" destination="tbf-N8-3ci" id="QDy-g0-ZAG"/>
                         <outlet property="nameLabel" destination="vTN-CI-XET" id="gxC-Tq-ijq"/>
                     </connections>
                 </viewController>
