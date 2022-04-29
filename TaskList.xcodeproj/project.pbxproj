@@ -16,6 +16,7 @@
 		D1DCE8D0281A779500E04F25 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1DCE8CE281A779500E04F25 /* LaunchScreen.storyboard */; };
 		D1DCE8D9281A796E00E04F25 /* ToDoListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DCE8D7281A796E00E04F25 /* ToDoListItem+CoreDataClass.swift */; };
 		D1DCE8DA281A796E00E04F25 /* ToDoListItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DCE8D8281A796E00E04F25 /* ToDoListItem+CoreDataProperties.swift */; };
+		D1DCE8DD281B0AE400E04F25 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DCE8DC281B0AE400E04F25 /* TaskViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		D1DCE8D1281A779500E04F25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D1DCE8D7281A796E00E04F25 /* ToDoListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDoListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D1DCE8D8281A796E00E04F25 /* ToDoListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDoListItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D1DCE8DC281B0AE400E04F25 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				D1DCE8CE281A779500E04F25 /* LaunchScreen.storyboard */,
 				D1DCE8D1281A779500E04F25 /* Info.plist */,
 				D1DCE8C9281A779400E04F25 /* TaskList.xcdatamodeld */,
+				D1DCE8DC281B0AE400E04F25 /* TaskViewController.swift */,
 			);
 			path = TaskList;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1DCE8CB281A779400E04F25 /* TaskList.xcdatamodeld in Sources */,
+				D1DCE8DD281B0AE400E04F25 /* TaskViewController.swift in Sources */,
 				D1DCE8C5281A779400E04F25 /* ViewController.swift in Sources */,
 				D1DCE8C1281A779400E04F25 /* AppDelegate.swift in Sources */,
 				D1DCE8D9281A796E00E04F25 /* ToDoListItem+CoreDataClass.swift in Sources */,

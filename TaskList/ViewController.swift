@@ -30,9 +30,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         tableView.frame = view.bounds
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+        tableView.addGestureRecognizer(longPress)
         
         // Add + button
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapPlus))
+        
+        localNotification()
     }
     
     @objc private func didTapPlus(){
@@ -48,7 +52,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }))
         present(alert, animated: true)
     }
-
+    
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                tableView.deselectRow(at: indexPath, animated: true)
+                
+                let item = toDoItems[indexPath.row]
+                let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                
+                sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+                sheet.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
+                
+                    let alert = UIAlertController(title: "Edit Item", message: "Edit to-do item", preferredStyle: .alert)
+                
+                    alert.addTextField(configurationHandler: nil)
+                    alert.textFields?.first?.text = item.name
+                    alert.addAction(UIAlertAction(title: "Save changes", style: .cancel, handler: { [weak self] _ in
+                        guard let field = alert.textFields?.first, let newName = field.text, !newName.isEmpty else{
+                            return
+                        }
+                
+                        self?.updateItem(item: item, newName: newName)
+                    }))
+                    self.present(alert, animated: true)
+                }))
+                sheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+                    self?.deleteItem(item: item)
+                }))
+                
+                present(sheet, animated: true)
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return toDoItems.count
     }
@@ -63,30 +102,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let item = toDoItems[indexPath.row]
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let vc = storyboard?.instantiateViewController(identifier: "task") as! TaskViewController
+        vc.title = "Your Task"
+        vc.createdAt = toDoItems[indexPath.row].createdAt
+        vc.name = toDoItems[indexPath.row].name
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // Handle local notification
+    func localNotification(){
+        // Ask for permission
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert], completionHandler: {(granted, error) in })
         
-        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        sheet.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
-            
-            let alert = UIAlertController(title: "Edit Item", message: "Edit to-do item", preferredStyle: .alert)
-            
-            alert.addTextField(configurationHandler: nil)
-            alert.textFields?.first?.text = item.name
-            alert.addAction(UIAlertAction(title: "Save changes", style: .cancel, handler: { [weak self] _ in
-                guard let field = alert.textFields?.first, let newName = field.text, !newName.isEmpty else{
-                    return
-                }
-                
-                self?.updateItem(item: item, newName: newName)
-            }))
-            self.present(alert, animated: true)
-        }))
-        sheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
-            self?.deleteItem(item: item)
-        }))
+        // Notification content
+        let content = UNMutableNotificationContent()
+        content.title = "Like TaskList?"
+        content.body = "Don't forget to rate the App on the App Store"
         
-        present(sheet, animated: true)
+        // Notification trigger
+        let date = Date().addingTimeInterval(10)
+        
+        let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        
+        // Request
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        
+        center.add(request)
     }
     
     // CoreData Operations
